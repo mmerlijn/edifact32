@@ -1,6 +1,6 @@
-# HL7
+# Edifact32 MEDRPT
 
-Read and write HL7 messages from and to array
+Write Medrpt edifact messages form msg repository
 
 ### Requirements
 
@@ -11,21 +11,15 @@ Read and write HL7 messages from and to array
 ``` composer require mmerlijn/msg-edifact32```
 
 ### Writing messages
-AANPASSEN!!!!!!!!!!!!!!!!!!
+
 ```php
 // fill the msg repository
 $msg = new Msg();
-$msg->sender->application = "Application name";
-$msg->sender->facility = "Facility name";
-$msg->receiver->application = "Application name";
-$msg->receiver->facility = "Facility name";
-$msg->datetime = Carbon::now(); //default current datetime
-$msg->security_id = ""; //optional
-$msg->msgType->type = "ORM";
-$msg->msgType->trigger = "001";
-$msg->msgType->structure = "ORM_001";
+$msg->sender->agbcode = "1234567";
+$msg->receiver->agbcode = "7654321";
+//...
 $msg->id = "abc123"; //unique message id
-$msg->msgType->version="2.4"; //default
+
 
 //Patient data
 $msg->patient->addId(new Id(id:"123456782",type:"bsn"));
@@ -71,8 +65,8 @@ $msg->order->addResult(new Result(
     done: true, //final value
     change:false,
 ));
-$msg->order->dt_of_observation = Carbon::create(...);
-$msg->order->dt_of_analysis = Carbon::create(...);
+$msg->order->dt_of_observation = Carbon::now();
+$msg->order->dt_of_analysis = Carbon::now();
 
 //comments
 $msg->addComment("Hello World"); //belongs to msg
@@ -83,16 +77,14 @@ $msg->order->result->addComment("Good morning") // comment on result
 
 
 //create HL7 instance
-$hl7 = new \mmerlijn\msgHl7\Hl7();
+$edi32 = new \mmerlijn\msgEdifact32\Edifact32()
 
 //setting the data
-$hl7->setDatetimeFormat("YmdHis") //option (how to write datetime values 
-    ->setRepeatORC() //option default only ones
-    ->setMsg($msg);
+$edi32->setMsg($msg);
 
 //
 try{
-  echo $hl7->write(true); //with or without validation of required fields
+  echo $edi32->write(true); //with or without validation of required fields
 }catch(\Exception $e){
    echo $e;
 }
@@ -104,14 +96,14 @@ It is also possible to start with a template and add/overwrite msg data afterwar
 
 ```php
 //init instance
-$hl7 = new \mmerlijn\msgHl7\Hl7("MSH ....");
+$edi32 = new \mmerlijn\msgEdifact32\Edifact32("UNB+UNOA:1+50...");
 
 //or
-$hl7 = new \mmerlijn\msgHl7\Hl7();
-$hl7->read("MSH...");
+$edi32 = new \mmerlijn\msgEdifact32\Edifact32();
+$edi32->read("MSH...");
 
-//read data to repository
-$msg = $hl7->getMsg(new Msg());
+//read data to repository (not tested, not planned for implementation)
+$msg = $edi32->getMsg(new Msg());
 
 ```
 
