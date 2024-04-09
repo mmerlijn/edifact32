@@ -28,6 +28,7 @@ class NADTest extends TestCase
         $msg->receiver->setAddress(new Address(postcode: "1234AB", city: "Stad", street: "Straatnaam", building: "1a"));
         $edi32->setMsg($msg);
         $this->assertStringContainsString("NAD+PO+01234567:CGP:VEK++Achternaam:V:van+Straatnaam+1:a+Stad+1234AB", $edi32->write());
+        $this->assertStringNotContainsString("NAD+CCR",$edi32->write());
     }
 
     public function test_copy_setter(){

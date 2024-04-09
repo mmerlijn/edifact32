@@ -137,7 +137,7 @@ class Edifact32
             }
         }
         //kopie arts
-        if($msg->order->copy_to){
+        if($msg->order->copy_to?->agbcode){
             $start_segment_teller = $this->findSegmentKey("CTA") + 3;
             array_splice($this->segments, $start_segment_teller, 0, [new S01("S01+3")]);
             $start_segment_teller++;

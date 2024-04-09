@@ -91,7 +91,7 @@ class NAD extends Segment implements SegmentInterface
                 ->setData($msg->receiver->agbcode, 4,4);
         }elseif($this->getData(1)=="PO") { //aan
             $this->setContact($msg->receiver);
-        }elseif($this->getData(1)=="CCR") { //kopie
+        }elseif($this->getData(1)=="CCR" and $msg->order->copy_to?->agbcode) { //kopie
             $this->setContact($msg->order->copy_to);
         }
     }
