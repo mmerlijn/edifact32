@@ -60,6 +60,7 @@ class Edifact32
     public function write(bool $validate = false): string
     {
         Validator::reset();
+        $this->segments = array_values(array_filter($this->segments,fn($segment)=>!$segment->isEmpty()));
         $output = "";
         foreach ($this->segments as $teller => $segment) {
             if ($validate)
@@ -209,7 +210,7 @@ class Edifact32
 
                 new RFF("RFF+SRI:"),
                 new STS("STS++G"),
-                new DTM("DTM+ISR::203"),
+                //new DTM("DTM+ISR::203"),
 
                 new S04("S04+1+N"),
 

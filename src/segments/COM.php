@@ -23,10 +23,19 @@ class COM extends Segment implements SegmentInterface
         if($this->params['type']=='sender') {
             $this->setData($msg->sender->phone?->number, 1)
             ->setData("TE", 1,1);
+            if(!$msg->sender->phone?->number or $msg->sender->phone?->number == 'nb'){
+                $this->empty = true;
+            }
         }elseif($this->params['type']=='receiver') {
             $this->setData($msg->receiver->phone?->number, 1)->setData("TE", 1,1);
+            if(!$msg->receiver->phone?->number or $msg->receiver->phone?->number == 'nb'){
+                $this->empty = true;
+            }
         }elseif($this->params['type']=='patient') {
             $this->setData($msg->patient->getPhone(), 1)->setData("TE", 1,1);
+            if(!$msg->patient->getPhone() or $msg->patient->getPhone() == 'nb'){
+                $this->empty = true;
+            }
         }
     }
 }

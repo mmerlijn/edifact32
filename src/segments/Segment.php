@@ -10,7 +10,7 @@ class Segment implements SegmentInterface
 
     public string $name;    //name of the segment
     public array $data;     //data of the segment (multi dimensional)
-
+    protected bool $empty = false; //segment is empty
 
     public function __construct(public string $line = "", public array $params = [])
     {
@@ -53,7 +53,10 @@ class Segment implements SegmentInterface
     public function validate(): void
     {
     }
-
+    public function isEmpty(): bool
+    {
+        return $this->empty;
+    }
     //todo string escape
     public function setData(mixed $value, int $component, int $item = 0): self
     {
