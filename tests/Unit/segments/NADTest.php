@@ -24,7 +24,7 @@ class NADTest extends TestCase
         $msg = new Msg();
         $edi32 = new Edifact32();
         $msg->receiver->agbcode = "01234567";
-        $msg->receiver->setName(new Name(initials: "V", lastname: "Achternaam", prefix: "van"));
+        $msg->receiver->setName(new Name(initials: "V", own_lastname: "Achternaam", own_prefix: "van"));
         $msg->receiver->setAddress(new Address(postcode: "1234AB", city: "Stad", street: "Straatnaam", building: "1a"));
         $edi32->setMsg($msg);
         $this->assertStringContainsString("NAD+PO+01234567:CGP:VEK++Achternaam:V:van+Straatnaam+1:a+Stad+1234AB", $edi32->write());
@@ -34,7 +34,7 @@ class NADTest extends TestCase
         $msg = new Msg();
         $edi32 = new Edifact32();
         $msg->order->copy_to->agbcode = "01234567";
-        $msg->order->copy_to->setName(new Name(initials: "V", lastname: "Achternaam", prefix: "van"));
+        $msg->order->copy_to->setName(new Name(initials: "V", own_lastname: "Achternaam", own_prefix: "van"));
         $msg->order->copy_to->setAddress(new Address(postcode: "1234AB", city: "Stad", street: "Straatnaam", building: "1a"));
         $edi32->setMsg($msg);
         $this->assertStringContainsString("NAD+CCR+01234567:CGP:VEK++Achternaam:V:van+Straatnaam+1:a+Stad+1234AB", $edi32->write());

@@ -67,8 +67,8 @@ class NAD extends Segment implements SegmentInterface
             $msg->receiver->agbcode = $this->getData(2, 1);
             $msg->sender->setName(new Name(
                 initials: $this->getData(4,2),
-                lastname: $this->getData(4),
-                prefix: $this->getData(4,3)
+                own_lastname: $this->getData(4),
+                own_prefix: $this->getData(4,3)
             ));
             $msg->sender->setAddress(new Address(
                 postcode: $this->getData(8),
@@ -98,9 +98,9 @@ class NAD extends Segment implements SegmentInterface
     public function setContact(Contact $contact):self
     {
         $this->setData($contact->agbcode?:"000000", 2)
-            ->setData(substr($contact->name?->lastname ?? "",0,25), 4)
+            ->setData(substr($contact->name?->own_lastname ?? "",0,25), 4)
             ->setData($contact->name?->initials, 4,1)
-            ->setData(substr($contact->name?->prefix ?? "",0,10), 4,2)
+            ->setData(substr($contact->name?->own_prefix ?? "",0,10), 4,2)
             ->setData(substr($contact->address?->street ?? "",0,24), 5)
             ->setData(substr($contact->address?->building_nr ?? "",0,9), 6)
             ->setData(substr($contact->address?->building_addition ?? "",0,8) ,6,1)
