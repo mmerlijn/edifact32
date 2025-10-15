@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d545631cc78346bae00a128ceb21cf12",
+    "content-hash": "c18b4854f48cd91ea7c8a2f0a34d6f0e",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -77,16 +77,16 @@
         },
         {
             "name": "mmerlijn/msg-repo",
-            "version": "v2.2",
+            "version": "v2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mmerlijn/msg-repo.git",
-                "reference": "ece44c63a6c5dfada1593981cd70828b63e961a0"
+                "reference": "89ead2740e75346bed3ed6c61c64f11a93e72420"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mmerlijn/msg-repo/zipball/ece44c63a6c5dfada1593981cd70828b63e961a0",
-                "reference": "ece44c63a6c5dfada1593981cd70828b63e961a0",
+                "url": "https://api.github.com/repos/mmerlijn/msg-repo/zipball/89ead2740e75346bed3ed6c61c64f11a93e72420",
+                "reference": "89ead2740e75346bed3ed6c61c64f11a93e72420",
                 "shasum": ""
             },
             "require": {
@@ -120,9 +120,9 @@
             "description": "Dutch healthcare read/write edifact to/from repository",
             "support": {
                 "issues": "https://github.com/mmerlijn/msg-repo/issues",
-                "source": "https://github.com/mmerlijn/msg-repo/tree/v2.2"
+                "source": "https://github.com/mmerlijn/msg-repo/tree/v2.4"
             },
-            "time": "2025-08-11T09:53:57+00:00"
+            "time": "2025-10-15T06:55:20+00:00"
         },
         {
             "name": "nesbot/carbon",
