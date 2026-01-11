@@ -12,11 +12,12 @@
   "minimum-stability": "stable",
   "require": {
     "php": "^8.2",
-    "mmerlijn/msg-repo": "~2.4",
+    "mmerlijn/msg-repo": "~3.0",
     "nesbot/carbon": "~3.8"
   },
   "require-dev": {
-    "phpunit/phpunit": "^11.0.1"
+    "larapack/dd": "^1.1",
+    "pestphp/pest": "4.x-dev"
   },
   "autoload": {
     "psr-4": {
@@ -33,7 +34,10 @@
     "test-f": "vendor/bin/phpunit --filter"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
   },
   "extra": {
     "branch-alias": {

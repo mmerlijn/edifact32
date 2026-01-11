@@ -27,15 +27,15 @@ class DTM extends Segment implements SegmentInterface
                 $this->getData(1, 2)
             );
         }elseif($this->getData(1)=="SCO") {
-            $msg->order->dt_of_observation = Carbon::createFromFormat("ymdHi",
+            $msg->order->observation_at = Carbon::createFromFormat("ymdHi",
                 $this->getData(1, 2)
             );
         }elseif($this->getData(1)=="ISO"){
-            $msg->order->dt_of_observation = Carbon::createFromFormat("ymdHi",
+            $msg->order->observation_at = Carbon::createFromFormat("ymdHi",
                 $this->getData(1, 2)
             );
         }elseif($this->getData(1)=="ISR"){
-            $msg->order->dt_of_observation = Carbon::createFromFormat("ymdHi",
+            $msg->order->observation_at = Carbon::createFromFormat("ymdHi",
                 $this->getData(1, 2)
             );
         }
@@ -51,13 +51,13 @@ class DTM extends Segment implements SegmentInterface
             $this->setData($msg->patient->dob?->format("Ymd"), 1, 1)
                 ->setData('102', 1, 2);
         }elseif($this->getData(1)=="SCO") { //monster
-            $this->setData($msg->order->dt_of_observation?->format("YmdHi"), 1, 1)
+            $this->setData($msg->order->observation_at?->format("YmdHi"), 1, 1)
                 ->setData('203', 1, 2);
         }elseif($this->getData(1)=="ISO"){ //onderzoeksdatum
-            $this->setData($msg->order->dt_of_observation?->format("YmdHi"), 1, 1)
+            $this->setData($msg->order->observation_at?->format("YmdHi"), 1, 1)
                 ->setData('203', 1, 2);
         }elseif($this->getData(1)=="ISR"){ //labnr datum
-            $this->setData($msg->order->dt_of_observation?->format("YmdHi"), 1, 1)
+            $this->setData($msg->order->observation_at?->format("YmdHi"), 1, 1)
                 ->setData('203', 1, 2);
 
         }

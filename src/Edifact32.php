@@ -27,6 +27,7 @@ use mmerlijn\msgEdifact32\segments\S20;
 use mmerlijn\msgEdifact32\segments\SPC;
 use mmerlijn\msgEdifact32\segments\STS;
 use mmerlijn\msgEdifact32\segments\UNB;
+use mmerlijn\msgEdifact32\segments\Undefined;
 use mmerlijn\msgEdifact32\segments\UNH;
 use mmerlijn\msgEdifact32\segments\UNT;
 use mmerlijn\msgEdifact32\segments\UNZ;
@@ -98,18 +99,18 @@ class Edifact32
             $RND_counter = 1;
             $result_counter = 1;
             $start_segment_teller = $this->findSegmentKey("SPC") + 2;
-            foreach ($msg->order->results as $k => $result) {
+            foreach ($msg->order->requests[0]->observation as $k => $observation) {
                 array_splice($this->segments, $start_segment_teller, 0, [(new S18("S18+$result_counter+G"))]);
                 $start_segment_teller++;
                 $result_counter++;
-                array_splice($this->segments, $start_segment_teller, 0, [(new INV("INV+1+:AMB:NHG:"))->setResult($result)]);
+                array_splice($this->segments, $start_segment_teller, 0, [(new INV("INV+1+:AMB:NHG:"))->setResult($observation)]);
                 $start_segment_teller++;
-                array_splice($this->segments, $start_segment_teller, 0, [(new RSL("RSL+++++"))->setResult($result)]);
+                array_splice($this->segments, $start_segment_teller, 0, [(new RSL("RSL+++++"))->setResult($observation)]);
                 $start_segment_teller++;
                 $text = [];
                 //adding comments
-                foreach ($result->comments as $comment) {
-                    $text = array_merge($text, $this->trimStringToArray($comment, 70));
+                foreach ($observation->comments as $comment) {
+                    $text = array_merge($text, $this->trimStringToArray($comment->text, 70));
                 }
                 $length = count($text);
                 if ($length > 45) {
@@ -127,10 +128,10 @@ class Edifact32
                         $start_segment_teller++;
                     }
                 }
-                if ($result->reference_range) { //will be split by space
+                if ($observation->reference_range) { //will be split by space
                     array_splice($this->segments, $start_segment_teller, 0, [(new S20("S20+" . $RND_counter))]);
                     $start_segment_teller++;
-                    array_splice($this->segments, $start_segment_teller, 0, [(new RND("RND+RU++"))->setRange($result->reference_range)]);
+                    array_splice($this->segments, $start_segment_teller, 0, [(new RND("RND+RU++"))->setRange($observation->reference_range)]);
                     $start_segment_teller++;
                     $RND_counter++;
 
@@ -157,7 +158,7 @@ class Edifact32
     }
 
     //search for first segment occurrence
-    public function findSegmentKey(string $SEG, int $position=0)
+    public function findSegmentKey(string $SEG, int $position=0): int|string
     {
         $teller = 0;
         foreach ($this->segments as $k => $segment) {
@@ -189,7 +190,7 @@ class Edifact32
     }
 
     //MEDLAB
-    protected function createDefaultSegments()
+    protected function createDefaultSegments(): void
     {
         if ($this->type == "MEDRPT") {
             $this->segments = [
