@@ -11,7 +11,7 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "php": "^8.2",
+    "php": "^8.3",
     "mmerlijn/msg-repo": "~3.0",
     "nesbot/carbon": "~3.8"
   },

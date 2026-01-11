@@ -7,12 +7,16 @@ use mmerlijn\msgEdifact32\Edifact32;
 use mmerlijn\msgRepo\Address;
 use mmerlijn\msgRepo\Contact;
 use mmerlijn\msgRepo\Enums\PatientSexEnum;
+use mmerlijn\msgRepo\Enums\ValueTypeEnum;
 use mmerlijn\msgRepo\Msg;
 use mmerlijn\msgRepo\Name;
+use mmerlijn\msgRepo\Observation;
 use mmerlijn\msgRepo\Order;
 use mmerlijn\msgRepo\Patient;
 use mmerlijn\msgRepo\Phone;
 use mmerlijn\msgRepo\Result;
+use mmerlijn\msgRepo\TestCode;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class Edifact32Test extends TestCase
@@ -29,13 +33,13 @@ class Edifact32Test extends TestCase
             request_nr: 'ZD12345678',
             lab_nr: '012345',
             requester: new Contact(agbcode: '012345678', name: new Name(initials: 'P',own_lastname: 'Huisarts'), source: 'VEKTIS', address: new Address(postcode: '9988AB', city: 'City', street: 'Street', building: '1a')),
-            dt_of_observation: Carbon::now(),
+            observation_at: Carbon::now(),
         );
-        $order->addResult(new Result(
-            type_of_value: 'TV', value: '*', test_code: 'FUND', test_name: 'FUND'
+        $order->addObservation(new Observation(
+            type: ValueTypeEnum::ST, value: '*', test: new TestCode(code: 'FUND', value: 'FUND')
         ));
-        $order->addResult(new Result(
-            type_of_value: 'CV', value: '386', test_code: 'FSFUFZ', test_name: 'advFUfund'
+        $order->addObservation(new Observation(
+            type: ValueTypeEnum::CE , value: '386', test: new TestCode(code: 'FSFUFZ', value: 'advFUfund')
         ));
         $repo->setOrder($order);
         $mrpt = new Edifact32();

@@ -6,16 +6,19 @@ use mmerlijn\msgEdifact32\Edifact32;
 use mmerlijn\msgEdifact32\segments\S18;
 use mmerlijn\msgRepo\Enums\OrderStatusEnum;
 use mmerlijn\msgRepo\Enums\ResultFlagEnum;
+use mmerlijn\msgRepo\Enums\ValueTypeEnum;
 use mmerlijn\msgRepo\Msg;
+use mmerlijn\msgRepo\Observation;
 use mmerlijn\msgRepo\Result;
+use mmerlijn\msgRepo\TestCode;
 use PHPUnit\Framework\TestCase;
 
 class S18Test extends TestCase
 {
     public function test_setter(){
         $msg = new Msg();
-        $msg->order->addResult(new Result(type_of_value: "ST", value: 3, test_code: "TSTCODE", test_name: "Test name", units: "mmol/l", reference_range: "0.0 10.0", abnormal_flag: ResultFlagEnum::EMPTY));
-        $msg->order->addResult(new Result(type_of_value: "ST", value: 3, test_code: "TSTCODE2", test_name: "Test name2", units: "mmol/l", reference_range: "0.0 10.0", abnormal_flag: ResultFlagEnum::EMPTY));
+        $msg->order->addObservation(new Observation(type:ValueTypeEnum::ST, value: 3, test: new TestCode(code: "TSTCODE", value: "Test name"), units: "mmol/l", reference_range: "0.0 10.0", abnormal_flag: ResultFlagEnum::EMPTY));
+        $msg->order->addObservation(new Observation(type:ValueTypeEnum::ST, value: 3, test: new TestCode(code: "TSTCODE2", value: "Test name2"), units: "mmol/l", reference_range: "0.0 10.0", abnormal_flag: ResultFlagEnum::EMPTY));
         $msg->order->order_status = OrderStatusEnum::FINAL;
         $edi32 = new Edifact32();
         $edi32->setMsg($msg);

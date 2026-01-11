@@ -30,7 +30,7 @@ class DTMTest extends TestCase
     public function test_monsert_setter(){
         $msg = new Msg();
         $nu = \Carbon\Carbon::now();
-        $msg->order->dt_of_observation = $nu;
+        $msg->order->observation_at = $nu;
         $edi32 = new Edifact32();
         $edi32->setMsg($msg);
         $this->assertStringContainsString("DTM+SCO:".$nu->format('YmdHi').":203", $edi32->write());
@@ -38,7 +38,7 @@ class DTMTest extends TestCase
     public function test_dt_test_setter(){
         $msg = new Msg();
         $nu = \Carbon\Carbon::now();
-        $msg->order->dt_of_observation = $nu;
+        $msg->order->observation_at = $nu;
         $edi32 = new Edifact32();
         $edi32->setMsg($msg);
         $this->assertStringContainsString("DTM+ISO:".$nu->format('YmdHi').":203", $edi32->write());

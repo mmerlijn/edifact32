@@ -95,11 +95,11 @@ class Edifact32
             $this->segments[$k]->setMsg($msg);
         }
         //set results
-        if (!empty($msg->order->results)) {
+        if (!empty($msg->order->requests[0]->observations)) {
             $RND_counter = 1;
             $result_counter = 1;
             $start_segment_teller = $this->findSegmentKey("SPC") + 2;
-            foreach ($msg->order->requests[0]->observation as $k => $observation) {
+            foreach ($msg->order->requests[0]->observations as $k => $observation) {
                 array_splice($this->segments, $start_segment_teller, 0, [(new S18("S18+$result_counter+G"))]);
                 $start_segment_teller++;
                 $result_counter++;
